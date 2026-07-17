@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MORIRIS｜モリリス公式サイト</title>
+<meta name="description" content="モリリスという世界がある。人間はいない。理由もない。">
+
+<!-- ==========================================================
+     Google Fonts: Noto Serif JP（日本語対応・詩的な雰囲気の明朝体）
+     ========================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ==========================================================
+     基本設定・変数定義
+     カラーイメージ：くすんだグリーン／ダークブラウン／霧がかった白
+     ========================================================== */
+  :root {
+    --color-bg: #14150f;          /* ベース：ほぼ黒に近いダークブラウン */
+    --color-bg-deep: #0c0d09;     /* さらに深い闇 */
+    --color-moss: #4a5a44;        /* くすんだグリーン */
+    --color-moss-dim: #333c2e;    /* 暗いモスグリーン */
+    --color-mist: #e8e6dd;        /* 霧がかった白 */
+    --color-mist-dim: #b8b6ab;    /* 霧の中間色 */
+    --color-brown: #2a231c;       /* ダークブラウン */
+    --color-border: rgba(232, 230, 221, 0.25);
+    --font-serif: 'Noto Serif JP', serif;
+    --section-pad: 6rem 1.5rem;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-mist);
+    font-family: var(--font-serif);
+    font-weight: 300;
+    line-height: 2;
+    letter-spacing: 0.05em;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  /* ==========================================================
+     フェードインアニメーション（最小限）
+     ========================================================== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 1.4s ease, transform 1.4s ease;
+  }
+
+  .fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* ==========================================================
+     HEADER（ヘッダー：ロゴ＋ナビゲーション）
+     ========================================================== */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 1.5rem;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(12,13,9,0.85) 0%, rgba(12,13,9,0) 100%);
+  }
+
+  .site-logo {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    color: var(--color-mist);
+  }
+
+  .site-nav {
+    display: flex;
+    gap: 1.1rem;
+  }
+
+  .site-nav a {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--color-mist-dim);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.4s ease, border-color 0.4s ease;
+  }
+
+  .site-nav a:hover,
+  .site-nav a:focus-visible {
+    color: var(--color-mist);
+    border-bottom-color: var(--color-moss);
+  }
+
+  /* ==========================================================
+     共通セクションスタイル
+     ========================================================== */
+  section {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--section-pad);
+    text-align: center;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--color-moss);
+    margin-bottom: 1.6rem;
+    text-transform: uppercase;
+  }
+
+  .section-inner {
+    max-width: 34rem;
+    width: 100%;
+  }
+
+  /* ==========================================================
+     SECTION 1 : WORLD
+     背景は暗い森のイメージをCSSグラデーション＋擬似要素で表現
+     （画像は後で差し替え想定：.world-bg-image クラスに背景画像を設定可）
+     ========================================================== */
+  .section-world {
+    background:
+      radial-gradient(ellipse at 50% 20%, rgba(74,90,68,0.18) 0%, transparent 55%),
+      linear-gradient(to bottom, var(--color-bg-deep) 0%, var(--color-brown) 55%, var(--color-bg-deep) 100%);
+    overflow: hidden;
+  }
+
+  /* 木立をイメージした縦のシルエット（CSSのみ・後で画像に差し替え可能） */
+  .world-bg-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(0,0,0,0.5) 0px,
+        rgba(0,0,0,0.5) 2px,
+        transparent 2px,
+        transparent 42px
+      );
+    opacity: 0.5;
+    /* 差し替え例：background-image: url('images/world-bg.jpg'); background-size: cover; background-position: center; */
+  }
+
+  .world-bg-image::before,
+  .world-bg-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, var(--color-bg-deep) 95%);
+  }
+
+  .world-fog {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(232,230,221,0.06), transparent);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .world-copy {
+    position: relative;
+    z-index: 2;
+  }
+
+  .world-catch {
+    font-size: 1.55rem;
+    font-weight: 300;
+    line-height: 2.1;
+    color: var(--color-mist);
+  }
+
+  .world-catch .em {
+    color: var(--color-mist-dim);
+  }
+
+  .world-sub {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--color-mist-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ==========================================================
+     SECTION 2 : NOM
+     ========================================================== */
+  .section-nom {
+    background: var(--color-bg);
+  }
+
+  /* キャラ画像プレースホルダー：後で .nom-placeholder に画像差し替え可能 */
+  .nom-placeholder {
+    width: 11rem;
+    height: 11rem;
+    margin: 0 auto 2.4rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--color-moss-dim), var(--color-bg-deep) 75%);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--color-mist-dim);
+    /* 差し替え例：background-image: url('images/nom.png'); background-size: cover; */
+  }
+
+  .nom-name {
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.6rem;
+    color: var(--color-mist);
+  }
+
+  .nom-desc {
+    font-size: 1.05rem;
+    color: var(--color-mist-dim);
+    line-height: 2.2;
+  }
+
+  /* ==========================================================
+     SECTION 3 : STORY
+     ========================================================== */
+  .section-story {
+    background: linear-gradient(to bottom, var(--color-bg) 0%, var(--color-brown) 100%);
+  }
+
+  .story-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    margin-top: 2.6rem;
+    width: 100%;
+  }
+
+  .story-card {
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 1.8rem 1.4rem;
+    text-align: left;
+    background: rgba(232,230,221,0.02);
+    transition: border-color 0.4s ease, background 0.4s ease;
+  }
+
+  .story-card:hover,
+  .story-card:focus-within {
+    border-color: var(--color-moss);
+    background: rgba(232,230,221,0.04);
+  }
+
+  .story-card-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--color-moss);
+    display: block;
+    margin-bottom: 0.7rem;
+  }
+
+  .story-card-title {
+    font-size: 1rem;
+    color: var(--color-mist);
+    margin-bottom: 0.5rem;
+  }
+
+  .story-card-desc {
+    font-size: 0.8rem;
+    color: var(--color-mist-dim);
+    line-height: 1.9;
+  }
+
+  .story-card-link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--color-mist-dim);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 2px;
+  }
+
+  /* ==========================================================
+     SECTION 4 : SNS
+     ========================================================== */
+  .section-sns {
+    background: var(--color-bg-deep);
+  }
+
+  .sns-account {
+    font-size: 0.8rem;
+    color: var(--color-mist-dim);
+    margin-bottom: 2.4rem;
+    letter-spacing: 0.1em;
+  }
+
+  .sns-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+  }
+
+  .sns-button {
+    display: block;
+    width: 100%;
+    padding: 0.95rem 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--color-mist);
+    transition: border-color 0.4s ease, background 0.4s ease, transform 0.3s ease;
+  }
+
+  .sns-button:hover,
+  .sns-button:focus-visible {
+    border-color: var(--color-moss);
+    background: rgba(74,90,68,0.12);
+    transform: translateY(-2px);
+  }
+
+  .sns-button.is-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* ==========================================================
+     FOOTER
+     ========================================================== */
+  .site-footer {
+    padding: 2.6rem 1.5rem 3rem;
+    text-align: center;
+    background: var(--color-bg-deep);
+  }
+
+  .site-footer p {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--color-mist-dim);
+  }
+
+  /* ==========================================================
+     レスポンシブ（タブレット以上）
+     ========================================================== */
+  @media (min-width: 640px) {
+    .site-header {
+      padding: 2rem 3rem;
+    }
+
+    .site-nav {
+      gap: 2rem;
+    }
+
+    .world-catch {
+      font-size: 2.1rem;
+    }
+
+    .nom-desc {
+      font-size: 1.15rem;
+    }
+
+    .story-cards {
+      flex-direction: row;
+    }
+
+    .story-card {
+      flex: 1;
+    }
+
+    .sns-links {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .sns-button {
+      width: auto;
+      min-width: 12rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==========================================================
+     HEADER
+     ========================================================== -->
+<header class="site-header">
+  <div class="site-logo">MORIRIS</div>
+  <nav class="site-nav">
+    <a href="#world">WORLD</a>
+    <a href="#nom">NOM</a>
+    <a href="#story">STORY</a>
+    <a href="#sns">SNS</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ==========================================================
+       SECTION 1 : WORLD
+       ========================================================== -->
+  <section id="world" class="section-world">
+    <div class="world-bg-image" aria-hidden="true"></div>
+    <div class="world-fog" aria-hidden="true"></div>
+    <div class="section-inner world-copy fade-in">
+      <p class="section-label">World</p>
+      <p class="world-catch">
+        モリリスという<br>
+        世界がある。<br>
+        <span class="em">人間はいない。</span><br>
+        <span class="em">理由もない。</span>
+      </p>
+      <p class="world-sub">森だけが、静かに続いている。</p>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       SECTION 2 : NOM
+       ========================================================== -->
+  <section id="nom" class="section-nom">
+    <div class="section-inner fade-in">
+      <p class="section-label">Nom</p>
+      <!-- キャラ画像プレースホルダー -->
+      <div class="nom-placeholder">NOM</div>
+      <p class="nom-name">名前：ノム</p>
+      <p class="nom-desc">
+        何の生き物かわからない。<br>
+        今日も起きた。<br>
+        それだけ。
+      </p>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       SECTION 3 : STORY
+       ========================================================== -->
+  <section id="story" class="section-story">
+    <div class="section-inner fade-in">
+      <p class="section-label">Story</p>
+      <p class="world-sub">最新話は、SNSで更新中。</p>
+
+      <div class="story-cards">
+        <!-- STORYカード：プレースホルダー 1 -->
+        <article class="story-card">
+          <span class="story-card-num">EP. 01</span>
+          <p class="story-card-title">タイトル未定</p>
+          <p class="story-card-desc">ここにエピソードの短い説明が入ります。</p>
+          <a href="#sns" class="story-card-link">続きを見る →</a>
+        </article>
+
+        <!-- STORYカード：プレースホルダー 2 -->
+        <article class="story-card">
+          <span class="story-card-num">EP. 02</span>
+          <p class="story-card-title">タイトル未定</p>
+          <p class="story-card-desc">ここにエピソードの短い説明が入ります。</p>
+          <a href="#sns" class="story-card-link">続きを見る →</a>
+        </article>
+
+        <!-- STORYカード：プレースホルダー 3 -->
+        <article class="story-card">
+          <span class="story-card-num">EP. 03</span>
+          <p class="story-card-title">タイトル未定</p>
+          <p class="story-card-desc">ここにエピソードの短い説明が入ります。</p>
+          <a href="#sns" class="story-card-link">続きを見る →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       SECTION 4 : SNS
+       ========================================================== -->
+  <section id="sns" class="section-sns">
+    <div class="section-inner fade-in">
+      <p class="section-label">SNS</p>
+      <p class="sns-account">@moriris_world</p>
+
+      <div class="sns-links">
+        <a class="sns-button" href="https://www.tiktok.com/@moriris_world" target="_blank" rel="noopener noreferrer">TIKTOK</a>
+        <a class="sns-button" href="https://www.instagram.com/moriris_world" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+        <!-- 将来的にX（旧Twitter）を追加予定：現在は無効化 -->
+        <span class="sns-button is-disabled">X（近日公開）</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================
+     FOOTER
+     ========================================================== -->
+<footer class="site-footer">
+  <p>© MORIRIS</p>
+</footer>
+
+<script>
+  // ==========================================================
+  // フェードインアニメーション制御（IntersectionObserver）
+  // ==========================================================
+  (function () {
+    var targets = document.querySelectorAll('.fade-in');
+
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    targets.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
