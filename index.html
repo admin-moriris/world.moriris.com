@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MORIRIS｜モリリス公式サイト</title>
-<meta name="description" content="モリリスという世界がある。人間はいない。理由もない。">
+<meta name="description" content="モリリスという世界がある。いつなのかわからない。どこなのかもわからない。">
 
 <!-- ==========================================================
      Google Fonts: Noto Serif JP（日本語対応・詩的な雰囲気の明朝体）
@@ -102,29 +102,31 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.4rem 1.5rem;
+    padding: 1.3rem 1.1rem;
     z-index: 100;
     background: linear-gradient(to bottom, rgba(12,13,9,0.85) 0%, rgba(12,13,9,0) 100%);
   }
 
   .site-logo {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 500;
-    letter-spacing: 0.35em;
+    letter-spacing: 0.22em;
     color: var(--color-mist);
+    flex-shrink: 0;
   }
 
   .site-nav {
     display: flex;
-    gap: 1.1rem;
+    gap: 0.55rem;
   }
 
   .site-nav a {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
     color: var(--color-mist-dim);
     padding: 0.4rem 0;
     border-bottom: 1px solid transparent;
+    white-space: nowrap;
     transition: color 0.4s ease, border-color 0.4s ease;
   }
 
@@ -234,27 +236,27 @@
   }
 
   /* ==========================================================
-     SECTION 2 : NOM
+     SECTION 2 : CHARACTER（現在はノムのみ。今後キャラクターを追加予定）
      ========================================================== */
-  .section-nom {
+  .section-character {
     background: var(--color-bg);
   }
 
-  /* キャラ画像プレースホルダー：後で .nom-placeholder に画像差し替え可能 */
-  .nom-placeholder {
+  /* キャラ画像枠：中身は .character-image に差し替え可能な画像 */
+  .character-avatar {
     width: 11rem;
     height: 11rem;
     margin: 0 auto 2.4rem;
     border-radius: 50%;
+    overflow: hidden;
     background: radial-gradient(circle at 35% 30%, var(--color-moss-dim), var(--color-bg-deep) 75%);
     border: 1px solid var(--color-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--color-mist-dim);
-    /* 差し替え例：background-image: url('images/nom.png'); background-size: cover; */
+  }
+
+  .character-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .nom-name {
@@ -314,12 +316,6 @@
     margin-bottom: 0.5rem;
   }
 
-  .story-card-desc {
-    font-size: 0.8rem;
-    color: var(--color-mist-dim);
-    line-height: 1.9;
-  }
-
   .story-card-link {
     display: inline-block;
     margin-top: 1rem;
@@ -328,6 +324,16 @@
     color: var(--color-mist-dim);
     border-bottom: 1px solid var(--color-border);
     padding-bottom: 2px;
+  }
+
+  .story-card.is-unpublished {
+    opacity: 0.45;
+  }
+
+  .story-card-status {
+    font-size: 0.8rem;
+    color: var(--color-mist-dim);
+    letter-spacing: 0.1em;
   }
 
   /* ==========================================================
@@ -370,11 +376,6 @@
     transform: translateY(-2px);
   }
 
-  .sns-button.is-disabled {
-    opacity: 0.4;
-    pointer-events: none;
-  }
-
   /* ==========================================================
      FOOTER
      ========================================================== */
@@ -398,8 +399,18 @@
       padding: 2rem 3rem;
     }
 
+    .site-logo {
+      font-size: 1.1rem;
+      letter-spacing: 0.35em;
+    }
+
     .site-nav {
       gap: 2rem;
+    }
+
+    .site-nav a {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
     }
 
     .world-catch {
@@ -439,7 +450,7 @@
   <div class="site-logo">MORIRIS</div>
   <nav class="site-nav">
     <a href="#world">WORLD</a>
-    <a href="#nom">NOM</a>
+    <a href="#character">CHARACTER</a>
     <a href="#story">STORY</a>
     <a href="#sns">SNS</a>
   </nav>
@@ -458,26 +469,27 @@
       <p class="world-catch">
         モリリスという<br>
         世界がある。<br>
-        <span class="em">人間はいない。</span><br>
-        <span class="em">理由もない。</span>
+        <span class="em">いつなのかわからない。</span><br>
+        <span class="em">どこなのかもわからない。</span>
       </p>
       <p class="world-sub">森だけが、静かに続いている。</p>
     </div>
   </section>
 
   <!-- ==========================================================
-       SECTION 2 : NOM
+       SECTION 2 : CHARACTER（現在はノムのみ。今後キャラクターを追加予定）
        ========================================================== -->
-  <section id="nom" class="section-nom">
+  <section id="character" class="section-character">
     <div class="section-inner fade-in">
-      <p class="section-label">Nom</p>
-      <!-- キャラ画像プレースホルダー -->
-      <div class="nom-placeholder">NOM</div>
+      <p class="section-label">Character</p>
+      <!-- キャラ画像：assets/character01.png を使用 -->
+      <div class="character-avatar">
+        <img class="character-image" src="assets/character01.png" alt="ノム">
+      </div>
       <p class="nom-name">名前：ノム</p>
       <p class="nom-desc">
         何の生き物かわからない。<br>
-        今日も起きた。<br>
-        それだけ。
+        よく食べる。
       </p>
     </div>
   </section>
@@ -491,28 +503,23 @@
       <p class="world-sub">最新話は、SNSで更新中。</p>
 
       <div class="story-cards">
-        <!-- STORYカード：プレースホルダー 1 -->
+        <!-- STORYカード：公開エピソード 1 -->
         <article class="story-card">
           <span class="story-card-num">EP. 01</span>
-          <p class="story-card-title">タイトル未定</p>
-          <p class="story-card-desc">ここにエピソードの短い説明が入ります。</p>
+          <p class="story-card-title">ノム - 朝</p>
           <a href="#sns" class="story-card-link">続きを見る →</a>
         </article>
 
-        <!-- STORYカード：プレースホルダー 2 -->
-        <article class="story-card">
+        <!-- STORYカード：未公開 2 -->
+        <article class="story-card is-unpublished">
           <span class="story-card-num">EP. 02</span>
-          <p class="story-card-title">タイトル未定</p>
-          <p class="story-card-desc">ここにエピソードの短い説明が入ります。</p>
-          <a href="#sns" class="story-card-link">続きを見る →</a>
+          <p class="story-card-status">未公開</p>
         </article>
 
-        <!-- STORYカード：プレースホルダー 3 -->
-        <article class="story-card">
+        <!-- STORYカード：未公開 3 -->
+        <article class="story-card is-unpublished">
           <span class="story-card-num">EP. 03</span>
-          <p class="story-card-title">タイトル未定</p>
-          <p class="story-card-desc">ここにエピソードの短い説明が入ります。</p>
-          <a href="#sns" class="story-card-link">続きを見る →</a>
+          <p class="story-card-status">未公開</p>
         </article>
       </div>
     </div>
@@ -529,8 +536,6 @@
       <div class="sns-links">
         <a class="sns-button" href="https://www.tiktok.com/@moriris_world" target="_blank" rel="noopener noreferrer">TIKTOK</a>
         <a class="sns-button" href="https://www.instagram.com/moriris_world" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-        <!-- 将来的にX（旧Twitter）を追加予定：現在は無効化 -->
-        <span class="sns-button is-disabled">X（近日公開）</span>
       </div>
     </div>
   </section>
