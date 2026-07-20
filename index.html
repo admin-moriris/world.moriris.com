@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MORIRIS｜モリリス公式サイト</title>
 <meta name="description" content="モリリスという世界がある。いつなのかわからない。どこなのかもわからない。">
+<link rel="icon" type="image/png" href="assets/icon00.png">
 
 <!-- ==========================================================
      Google Fonts: Noto Serif JP（日本語対応・詩的な雰囲気の明朝体）
@@ -236,10 +237,17 @@
   }
 
   /* ==========================================================
-     SECTION 2 : CHARACTER（現在はノムのみ。今後キャラクターを追加予定）
+     SECTION 2 : CHARACTER（複数キャラクター対応。今後も追加予定）
      ========================================================== */
   .section-character {
     background: var(--color-bg);
+  }
+
+  .character-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.5rem;
   }
 
   /* キャラ画像枠：中身は .character-image に差し替え可能な画像 */
@@ -259,14 +267,14 @@
     object-fit: cover;
   }
 
-  .nom-name {
+  .character-name {
     font-size: 1.1rem;
     letter-spacing: 0.15em;
     margin-bottom: 1.6rem;
     color: var(--color-mist);
   }
 
-  .nom-desc {
+  .character-desc {
     font-size: 1.05rem;
     color: var(--color-mist-dim);
     line-height: 2.2;
@@ -324,16 +332,6 @@
     color: var(--color-mist-dim);
     border-bottom: 1px solid var(--color-border);
     padding-bottom: 2px;
-  }
-
-  .story-card.is-unpublished {
-    opacity: 0.45;
-  }
-
-  .story-card-status {
-    font-size: 0.8rem;
-    color: var(--color-mist-dim);
-    letter-spacing: 0.1em;
   }
 
   /* ==========================================================
@@ -417,7 +415,14 @@
       font-size: 2.1rem;
     }
 
-    .nom-desc {
+    .character-list {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 4rem;
+    }
+
+    .character-desc {
       font-size: 1.15rem;
     }
 
@@ -477,20 +482,36 @@
   </section>
 
   <!-- ==========================================================
-       SECTION 2 : CHARACTER（現在はノムのみ。今後キャラクターを追加予定）
+       SECTION 2 : CHARACTER（複数キャラクター対応。今後も追加予定）
        ========================================================== -->
   <section id="character" class="section-character">
     <div class="section-inner fade-in">
       <p class="section-label">Character</p>
-      <!-- キャラ画像：assets/character01.png を使用 -->
-      <div class="character-avatar">
-        <img class="character-image" src="assets/character01.png" alt="ノム">
+      <div class="character-list">
+        <!-- キャラクター1：ノム / assets/character01.png -->
+        <article class="character-item">
+          <div class="character-avatar">
+            <img class="character-image" src="assets/character01.png" alt="ノム">
+          </div>
+          <p class="character-name">名前：ノム</p>
+          <p class="character-desc">
+            何の生き物かわからない。<br>
+            よく寝る。
+          </p>
+        </article>
+
+        <!-- キャラクター2：モル / assets/character02.png -->
+        <article class="character-item">
+          <div class="character-avatar">
+            <img class="character-image" src="assets/character02.png" alt="モル">
+          </div>
+          <p class="character-name">名前：モル</p>
+          <p class="character-desc">
+            何の生き物かわからない。<br>
+            臆病な性格。
+          </p>
+        </article>
       </div>
-      <p class="nom-name">名前：ノム</p>
-      <p class="nom-desc">
-        何の生き物かわからない。<br>
-        よく食べる。
-      </p>
     </div>
   </section>
 
@@ -510,16 +531,18 @@
           <a href="#sns" class="story-card-link">続きを見る →</a>
         </article>
 
-        <!-- STORYカード：未公開 2 -->
-        <article class="story-card is-unpublished">
+        <!-- STORYカード：公開エピソード 2 -->
+        <article class="story-card">
           <span class="story-card-num">EP. 02</span>
-          <p class="story-card-status">未公開</p>
+          <p class="story-card-title">モル - 雨</p>
+          <a href="#sns" class="story-card-link">続きを見る →</a>
         </article>
 
-        <!-- STORYカード：未公開 3 -->
-        <article class="story-card is-unpublished">
+        <!-- STORYカード：公開エピソード 3 -->
+        <article class="story-card">
           <span class="story-card-num">EP. 03</span>
-          <p class="story-card-status">未公開</p>
+          <p class="story-card-title">ノム - 雨</p>
+          <a href="#sns" class="story-card-link">続きを見る →</a>
         </article>
       </div>
     </div>
