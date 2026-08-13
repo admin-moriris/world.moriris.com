@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MORIRIS｜モリリス公式サイト</title>
-<meta name="description" content="モリリスという世界がある。いつなのかわからない。どこなのかもわからない。">
+<meta name="description" content="モリリスという世界がある。人間は、いない。理由は誰も知らない。不思議な生き物たちが、今日も静かに生きている。">
 <link rel="icon" type="image/png" href="assets/icon00.png">
 
 <!-- ==========================================================
-     Google Fonts: Noto Serif JP（日本語対応・詩的な雰囲気の明朝体）
+     Google Fonts
+     日本語：Noto Sans JP（細めのゴシック） / 英語：Cormorant Garamond（セリフ体）
      ========================================================== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
 
 <style>
   /* ==========================================================
      基本設定・変数定義
-     カラーイメージ：くすんだグリーン／ダークブラウン／霧がかった白
+     カラーイメージ：ダークグリーン／くすんだ茶／霧がかった灰色
      ========================================================== */
   :root {
-    --color-bg: #14150f;          /* ベース：ほぼ黒に近いダークブラウン */
-    --color-bg-deep: #0c0d09;     /* さらに深い闇 */
-    --color-moss: #4a5a44;        /* くすんだグリーン */
+    --color-bg: #14150f;          /* ベース：ほぼ黒に近い闇 */
+    --color-bg-deep: #0b0c08;     /* さらに深い闇 */
+    --color-moss: #4a5a44;        /* ダークグリーン */
     --color-moss-dim: #333c2e;    /* 暗いモスグリーン */
-    --color-mist: #e8e6dd;        /* 霧がかった白 */
-    --color-mist-dim: #b8b6ab;    /* 霧の中間色 */
-    --color-brown: #2a231c;       /* ダークブラウン */
-    --color-border: rgba(232, 230, 221, 0.25);
-    --font-serif: 'Noto Serif JP', serif;
+    --color-mist: #d9dad2;        /* 霧がかった灰色（明） */
+    --color-mist-dim: #9a988e;    /* 霧がかった灰色（暗） */
+    --color-rust: #5a4632;        /* くすんだ茶 */
+    --color-rust-dim: #3a2f22;    /* 暗いくすんだ茶 */
+    --color-border: rgba(217, 218, 210, 0.16);
+    --font-jp: 'Noto Sans JP', "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    --font-en: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
     --section-pad: 6rem 1.5rem;
   }
 
@@ -45,12 +48,17 @@
   body {
     background-color: var(--color-bg);
     color: var(--color-mist);
-    font-family: var(--font-serif);
+    font-family: var(--font-jp);
     font-weight: 300;
     line-height: 2;
     letter-spacing: 0.05em;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+  }
+
+  html[data-lang="en"] body {
+    font-family: var(--font-en);
+    letter-spacing: 0.02em;
   }
 
   img {
@@ -67,8 +75,16 @@
     list-style: none;
   }
 
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
   /* ==========================================================
-     フェードインアニメーション（最小限）
+     フェードインアニメーション（控えめ）
      ========================================================== */
   .fade-in {
     opacity: 0;
@@ -90,10 +106,14 @@
     html {
       scroll-behavior: auto;
     }
+    .hero-fog,
+    .world-fog {
+      animation: none !important;
+    }
   }
 
   /* ==========================================================
-     HEADER（ヘッダー：ロゴ＋ナビゲーション）
+     HEADER（ロゴ＋ナビゲーション＋言語切り替え）
      ========================================================== */
   .site-header {
     position: fixed;
@@ -103,27 +123,36 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.3rem 1.1rem;
+    gap: 0.6rem;
+    padding: 1.2rem 1rem;
     z-index: 100;
-    background: linear-gradient(to bottom, rgba(12,13,9,0.85) 0%, rgba(12,13,9,0) 100%);
+    background: linear-gradient(to bottom, rgba(11,12,8,0.85) 0%, rgba(11,12,8,0) 100%);
   }
 
   .site-logo {
-    font-size: 0.95rem;
+    font-family: var(--font-en);
+    font-size: 1rem;
     font-weight: 500;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     color: var(--color-mist);
     flex-shrink: 0;
   }
 
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
   .site-nav {
     display: flex;
-    gap: 0.55rem;
+    gap: 0.5rem;
   }
 
   .site-nav a {
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
+    font-family: var(--font-en);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
     color: var(--color-mist-dim);
     padding: 0.4rem 0;
     border-bottom: 1px solid transparent;
@@ -135,6 +164,41 @@
   .site-nav a:focus-visible {
     color: var(--color-mist);
     border-bottom-color: var(--color-moss);
+  }
+
+  /* 言語切り替え */
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-en);
+    flex-shrink: 0;
+  }
+
+  .lang-btn {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.45rem;
+    color: var(--color-mist-dim);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    transition: color 0.4s ease, border-color 0.4s ease;
+  }
+
+  .lang-btn.is-active {
+    color: var(--color-mist);
+    border-color: var(--color-border);
+  }
+
+  .lang-btn:hover,
+  .lang-btn:focus-visible {
+    color: var(--color-mist);
+  }
+
+  .lang-sep {
+    color: var(--color-mist-dim);
+    font-size: 0.65rem;
+    opacity: 0.5;
   }
 
   /* ==========================================================
@@ -152,6 +216,7 @@
   }
 
   .section-label {
+    font-family: var(--font-en);
     font-size: 0.7rem;
     letter-spacing: 0.4em;
     color: var(--color-moss);
@@ -162,55 +227,102 @@
   .section-inner {
     max-width: 34rem;
     width: 100%;
+    position: relative;
+    z-index: 2;
   }
 
   /* ==========================================================
-     SECTION 1 : WORLD
-     背景は暗い森のイメージをCSSグラデーション＋擬似要素で表現
-     （画像は後で差し替え想定：.world-bg-image クラスに背景画像を設定可）
+     SECTION 0 : HERO
+     廃墟・霧のイメージをCSSのみで表現
      ========================================================== */
-  .section-world {
+  .section-hero {
     background:
-      radial-gradient(ellipse at 50% 20%, rgba(74,90,68,0.18) 0%, transparent 55%),
-      linear-gradient(to bottom, var(--color-bg-deep) 0%, var(--color-brown) 55%, var(--color-bg-deep) 100%);
+      radial-gradient(ellipse at 50% 15%, rgba(74,90,68,0.16) 0%, transparent 55%),
+      linear-gradient(to bottom, var(--color-bg-deep) 0%, var(--color-rust-dim) 55%, var(--color-bg-deep) 100%);
     overflow: hidden;
   }
 
-  /* 木立をイメージした縦のシルエット（CSSのみ・後で画像に差し替え可能） */
-  .world-bg-image {
+  /* 崩れた柱・廃墟のシルエット（CSSのみ） */
+  .hero-ruins {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    opacity: 0.55;
     background-image:
       repeating-linear-gradient(
         90deg,
-        rgba(0,0,0,0.5) 0px,
-        rgba(0,0,0,0.5) 2px,
-        transparent 2px,
-        transparent 42px
+        rgba(0,0,0,0.55) 0px,
+        rgba(0,0,0,0.55) 3px,
+        transparent 3px,
+        transparent 38px
+      ),
+      linear-gradient(
+        to top,
+        rgba(0,0,0,0.65) 0%,
+        rgba(0,0,0,0.65) 32%,
+        transparent 32%
       );
-    opacity: 0.5;
-    /* 差し替え例：background-image: url('images/world-bg.jpg'); background-size: cover; background-position: center; */
+    background-size: 100% 100%, 76px 100%;
   }
 
-  .world-bg-image::before,
-  .world-bg-image::after {
+  .hero-ruins::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, transparent 30%, var(--color-bg-deep) 95%);
+    background: radial-gradient(ellipse at center 30%, transparent 25%, var(--color-bg-deep) 92%);
   }
 
-  .world-fog {
+  .hero-fog {
     position: absolute;
-    left: 0;
-    right: 0;
+    left: -10%;
+    right: -10%;
     bottom: 0;
-    height: 40%;
-    background: linear-gradient(to top, rgba(232,230,221,0.06), transparent);
+    height: 46%;
+    background: linear-gradient(to top, rgba(217,218,210,0.07), transparent);
     z-index: 1;
     pointer-events: none;
+    animation: fog-drift 70s ease-in-out infinite alternate;
+  }
+
+  @keyframes fog-drift {
+    from { transform: translateX(-3%); opacity: 0.85; }
+    to   { transform: translateX(3%); opacity: 1; }
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-catch {
+    font-size: 1.7rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--color-mist);
+  }
+
+  html[data-lang="en"] .hero-catch {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ==========================================================
+     SECTION 1 : WORLD
+     ========================================================== */
+  .section-world {
+    background: linear-gradient(to bottom, var(--color-bg) 0%, var(--color-bg-deep) 100%);
+    overflow: hidden;
+  }
+
+  .world-mist {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 30%, rgba(74,90,68,0.12), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 70%, rgba(90,70,50,0.12), transparent 70%);
   }
 
   .world-copy {
@@ -218,43 +330,36 @@
     z-index: 2;
   }
 
-  .world-catch {
-    font-size: 1.55rem;
-    font-weight: 300;
-    line-height: 2.1;
-    color: var(--color-mist);
-  }
-
-  .world-catch .em {
+  .world-text {
+    font-size: 1.05rem;
+    line-height: 2.2;
     color: var(--color-mist-dim);
-  }
-
-  .world-sub {
-    margin-top: 2rem;
-    font-size: 0.85rem;
-    color: var(--color-mist-dim);
-    letter-spacing: 0.1em;
   }
 
   /* ==========================================================
-     SECTION 2 : CHARACTER（複数キャラクター対応。今後も追加予定）
+     SECTION 2 : CHARACTER
      ========================================================== */
   .section-character {
-    background: var(--color-bg);
+    background: var(--color-bg-deep);
   }
 
-  .character-list {
+  .character-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .character-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3.5rem;
   }
 
-  /* キャラ画像枠：中身は .character-image に差し替え可能な画像 */
   .character-avatar {
-    width: 11rem;
-    height: 11rem;
-    margin: 0 auto 2.4rem;
+    width: 8.5rem;
+    height: 8.5rem;
+    margin: 0 auto 1.4rem;
     border-radius: 50%;
     overflow: hidden;
     background: radial-gradient(circle at 35% 30%, var(--color-moss-dim), var(--color-bg-deep) 75%);
@@ -268,109 +373,65 @@
   }
 
   .character-name {
-    font-size: 1.1rem;
+    font-size: 1rem;
     letter-spacing: 0.15em;
-    margin-bottom: 1.6rem;
+    margin-bottom: 0.9rem;
     color: var(--color-mist);
   }
 
   .character-desc {
-    font-size: 1.05rem;
+    font-size: 0.9rem;
     color: var(--color-mist-dim);
-    line-height: 2.2;
+    line-height: 1.9;
   }
 
   /* ==========================================================
-     SECTION 3 : STORY
-     ========================================================== */
-  .section-story {
-    background: linear-gradient(to bottom, var(--color-bg) 0%, var(--color-brown) 100%);
-  }
-
-  .story-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-    margin-top: 2.6rem;
-    width: 100%;
-  }
-
-  .story-card {
-    border: 1px solid var(--color-border);
-    border-radius: 14px;
-    padding: 1.8rem 1.4rem;
-    text-align: left;
-    background: rgba(232,230,221,0.02);
-    transition: border-color 0.4s ease, background 0.4s ease;
-  }
-
-  .story-card:hover,
-  .story-card:focus-within {
-    border-color: var(--color-moss);
-    background: rgba(232,230,221,0.04);
-  }
-
-  .story-card-num {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    color: var(--color-moss);
-    display: block;
-    margin-bottom: 0.7rem;
-  }
-
-  .story-card-title {
-    font-size: 1rem;
-    color: var(--color-mist);
-    margin-bottom: 0.5rem;
-  }
-
-  .story-card-link {
-    display: inline-block;
-    margin-top: 1rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    color: var(--color-mist-dim);
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 2px;
-  }
-
-  /* ==========================================================
-     SECTION 4 : SNS
+     SECTION 3 : SNS
      ========================================================== */
   .section-sns {
-    background: var(--color-bg-deep);
+    background: var(--color-bg);
   }
 
-  .sns-account {
-    font-size: 0.8rem;
-    color: var(--color-mist-dim);
-    margin-bottom: 2.4rem;
-    letter-spacing: 0.1em;
+  .sns-heading {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--color-mist);
+    margin-bottom: 2.6rem;
+  }
+
+  html[data-lang="en"] .sns-heading {
+    font-style: italic;
   }
 
   .sns-links {
     display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
   }
 
-  .sns-button {
-    display: block;
-    width: 100%;
-    padding: 0.95rem 1.5rem;
+  .sns-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 50%;
     border: 1px solid var(--color-border);
-    border-radius: 999px;
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
-    color: var(--color-mist);
-    transition: border-color 0.4s ease, background 0.4s ease, transform 0.3s ease;
+    color: var(--color-mist-dim);
+    transition: color 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
   }
 
-  .sns-button:hover,
-  .sns-button:focus-visible {
+  .sns-icon-link svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .sns-icon-link:hover,
+  .sns-icon-link:focus-visible {
+    color: var(--color-mist);
     border-color: var(--color-moss);
-    background: rgba(74,90,68,0.12);
     transform: translateY(-2px);
   }
 
@@ -384,6 +445,7 @@
   }
 
   .site-footer p {
+    font-family: var(--font-en);
     font-size: 0.65rem;
     letter-spacing: 0.3em;
     color: var(--color-mist-dim);
@@ -398,8 +460,12 @@
     }
 
     .site-logo {
-      font-size: 1.1rem;
-      letter-spacing: 0.35em;
+      font-size: 1.15rem;
+      letter-spacing: 0.3em;
+    }
+
+    .header-right {
+      gap: 2rem;
     }
 
     .site-nav {
@@ -408,40 +474,35 @@
 
     .site-nav a {
       font-size: 0.7rem;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.16em;
     }
 
-    .world-catch {
-      font-size: 2.1rem;
+    .hero-catch {
+      font-size: 2.3rem;
     }
 
-    .character-list {
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 4rem;
+    .world-text {
+      font-size: 1.2rem;
     }
 
-    .character-desc {
-      font-size: 1.15rem;
+    .character-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem 1.5rem;
     }
 
-    .story-cards {
-      flex-direction: row;
+    .character-avatar {
+      width: 9.5rem;
+      height: 9.5rem;
     }
 
-    .story-card {
-      flex: 1;
+    .sns-heading {
+      font-size: 1.8rem;
     }
+  }
 
-    .sns-links {
-      flex-direction: row;
-      justify-content: center;
-    }
-
-    .sns-button {
-      width: auto;
-      min-width: 12rem;
+  @media (min-width: 640px) and (max-width: 899px) {
+    .character-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>
@@ -453,131 +514,111 @@
      ========================================================== -->
 <header class="site-header">
   <div class="site-logo">MORIRIS</div>
-  <nav class="site-nav">
-    <a href="#world">WORLD</a>
-    <a href="#character">CHARACTER</a>
-    <a href="#story">STORY</a>
-    <a href="#sns">SNS</a>
-  </nav>
+  <div class="header-right">
+    <nav class="site-nav">
+      <a href="#world">WORLD</a>
+      <a href="#character">CHARACTER</a>
+      <a href="#sns">SNS</a>
+    </nav>
+    <div class="lang-toggle" role="group" aria-label="Language / 言語">
+      <button type="button" class="lang-btn" data-lang-btn="ja">JP</button>
+      <span class="lang-sep" aria-hidden="true">/</span>
+      <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
+    </div>
+  </div>
 </header>
 
 <main>
 
   <!-- ==========================================================
-       SECTION 1 : WORLD
+       SECTION 0 : HERO
        ========================================================== -->
-  <section id="world" class="section-world">
-    <div class="world-bg-image" aria-hidden="true"></div>
-    <div class="world-fog" aria-hidden="true"></div>
-    <div class="section-inner world-copy fade-in">
-      <p class="section-label">World</p>
-      <p class="world-catch">
-        モリリスという<br>
-        世界がある。<br>
-        <span class="em">いつなのかわからない。</span><br>
-        <span class="em">どこなのかもわからない。</span>
-      </p>
-      <p class="world-sub">森だけが、静かに続いている。</p>
+  <section id="hero" class="section-hero">
+    <div class="hero-ruins" aria-hidden="true"></div>
+    <div class="hero-fog" aria-hidden="true"></div>
+    <div class="section-inner hero-copy fade-in">
+      <h1 class="hero-catch" data-jp="人間がいない世界。" data-en="A world without humans."></h1>
     </div>
   </section>
 
   <!-- ==========================================================
-       SECTION 2 : CHARACTER（複数キャラクター対応。今後も追加予定）
+       SECTION 1 : WORLD
+       ========================================================== -->
+  <section id="world" class="section-world">
+    <div class="world-mist" aria-hidden="true"></div>
+    <div class="section-inner world-copy fade-in">
+      <p class="section-label">World</p>
+      <p class="world-text"
+         data-jp="モリリスという世界がある。&lt;br&gt;人間は、いない。理由は誰も知らない。&lt;br&gt;不思議な生き物たちが、今日も静かに生きている。"
+         data-en="There is a world called Moriris.&lt;br&gt;Humans are gone. No one knows why.&lt;br&gt;Strange creatures still live there, quietly, today."></p>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       SECTION 2 : CHARACTER
        ========================================================== -->
   <section id="character" class="section-character">
     <div class="section-inner fade-in">
       <p class="section-label">Character</p>
-      <div class="character-list">
-        <!-- キャラクター1：ノム / assets/character01.png -->
-        <article class="character-item">
+
+      <div class="character-grid">
+        <article class="character-card">
           <div class="character-avatar">
             <img class="character-image" src="assets/character01.png" alt="ノム">
           </div>
-          <p class="character-name">名前：ノム</p>
-          <p class="character-desc">
-            よく寝る。
-          </p>
+          <p class="character-name">ノム</p>
+          <p class="character-desc" data-jp="よく寝る。それだけでいい。" data-en="Sleeps a lot. That&#39;s enough."></p>
         </article>
 
-        <!-- キャラクター2：モル / assets/character02.png -->
-        <article class="character-item">
+        <article class="character-card">
           <div class="character-avatar">
             <img class="character-image" src="assets/character02.png" alt="モル">
           </div>
-          <p class="character-name">名前：モル</p>
-          <p class="character-desc">
-            臆病な性格。
-          </p>
+          <p class="character-name">モル</p>
+          <p class="character-desc" data-jp="臆病だけど、雨の日は外に出る。" data-en="Timid, but goes outside on rainy days."></p>
         </article>
 
-        <!-- キャラクター3：ゾム / assets/character03.png -->
-        <article class="character-item">
+        <article class="character-card">
           <div class="character-avatar">
             <img class="character-image" src="assets/character03.png" alt="ゾム">
           </div>
-          <p class="character-name">名前：ゾム</p>
-          <p class="character-desc">
-            昔のことをよく覚えている。
-          </p>
+          <p class="character-name">ゾム</p>
+          <p class="character-desc" data-jp="昔のことをよく覚えている。誰も聞かない。" data-en="Remembers the old days well. No one asks."></p>
         </article>
-           
-        <!-- キャラクター4：ミル / assets/character03.png -->
-        <article class="character-item">
+
+        <article class="character-card">
           <div class="character-avatar">
             <img class="character-image" src="assets/character04.png" alt="ミル">
           </div>
-          <p class="character-name">名前：ミル</p>
-          <p class="character-desc">
-            池の底で何かを探している。
-          </p>
+          <p class="character-name">ミル</p>
+          <p class="character-desc" data-jp="池の底で何かを探している。まだ見つかっていない。" data-en="Searching for something at the bottom of the pond. Not found yet."></p>
         </article>
       </div>
     </div>
   </section>
 
   <!-- ==========================================================
-       SECTION 3 : STORY
-       ========================================================== -->
-  <section id="story" class="section-story">
-    <div class="section-inner fade-in">
-      <p class="section-label">Story</p>
-      <p class="world-sub">最新話は、TikTokで更新中。</p>
-
-      <div class="story-cards">
-        <!-- STORYカード：公開エピソード 1 -->
-        <article class="story-card">
-          <span class="story-card-num">EP. 01</span>
-          <p class="story-card-title">ノム - 朝</p>
-          <a href="#sns" class="story-card-link">続きを見る →</a>
-        </article>
-
-        <!-- STORYカード：公開エピソード 2 -->
-        <article class="story-card">
-          <span class="story-card-num">EP. 02</span>
-          <p class="story-card-title">モル - 雨</p>
-          <a href="#sns" class="story-card-link">続きを見る →</a>
-        </article>
-
-        <!-- STORYカード：公開エピソード 3 -->
-        <article class="story-card">
-          <span class="story-card-num">EP. 03</span>
-          <p class="story-card-title">ノム - 雨</p>
-          <a href="#sns" class="story-card-link">続きを見る →</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==========================================================
-       SECTION 4 : SNS
+       SECTION 3 : SNS
        ========================================================== -->
   <section id="sns" class="section-sns">
     <div class="section-inner fade-in">
       <p class="section-label">SNS</p>
-      <p class="sns-account">@moriris_world</p>
+      <h2 class="sns-heading" data-jp="つながる" data-en="Follow us"></h2>
 
       <div class="sns-links">
-        <a class="sns-button" href="https://www.tiktok.com/@moriris_world" target="_blank" rel="noopener noreferrer">TIKTOK</a>
+        <a class="sns-icon-link" href="https://www.tiktok.com/@moriris_world" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 3v10.2a3.3 3.3 0 1 1-2.6-3.23"/>
+            <path d="M14 3c.4 2.4 2 4 4.6 4.3"/>
+          </svg>
+        </a>
+        <a class="sns-icon-link" href="https://www.instagram.com/moriris_world" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17" cy="7" r="0.8" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
@@ -592,6 +633,55 @@
 </footer>
 
 <script>
+  // ==========================================================
+  // 言語切り替え（JP / EN・localStorage保存・ページリロードなし）
+  // ==========================================================
+  (function () {
+    var STORAGE_KEY = 'moriris-lang';
+    var htmlEl = document.documentElement;
+    var translatable = document.querySelectorAll('[data-jp]');
+    var langButtons = document.querySelectorAll('[data-lang-btn]');
+
+    function applyLang(lang) {
+      translatable.forEach(function (el) {
+        var text = el.getAttribute(lang === 'en' ? 'data-en' : 'data-jp');
+        if (text != null) {
+          el.innerHTML = text;
+        }
+      });
+
+      htmlEl.setAttribute('lang', lang);
+      htmlEl.setAttribute('data-lang', lang);
+
+      langButtons.forEach(function (btn) {
+        var isActive = btn.getAttribute('data-lang-btn') === lang;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+
+      try {
+        localStorage.setItem(STORAGE_KEY, lang);
+      } catch (e) {
+        /* localStorageが使えない環境では保存をスキップ */
+      }
+    }
+
+    var saved = null;
+    try {
+      saved = localStorage.getItem(STORAGE_KEY);
+    } catch (e) {
+      saved = null;
+    }
+
+    applyLang(saved === 'en' ? 'en' : 'ja');
+
+    langButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyLang(btn.getAttribute('data-lang-btn'));
+      });
+    });
+  })();
+
   // ==========================================================
   // フェードインアニメーション制御（IntersectionObserver）
   // ==========================================================
