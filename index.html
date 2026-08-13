@@ -9,11 +9,11 @@
 
 <!-- ==========================================================
      Google Fonts
-     日本語：Yuji Syuku（楷書体に近い、細く静かな趣の書体） / 英語：Cormorant Garamond（セリフ体）
+     日本語：Yuji Mai（楷書体寄りだが、より細くシンプルな書体） / 英語：Cormorant Garamond（セリフ体）
      ========================================================== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Yuji+Mai&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
 
 <style>
   /* ==========================================================
@@ -30,7 +30,7 @@
     --color-rust: #5a4632;        /* くすんだ茶 */
     --color-rust-dim: #3a2f22;    /* 暗いくすんだ茶 */
     --color-border: rgba(217, 218, 210, 0.16);
-    --font-jp: 'Yuji Syuku', 'Hiragino Mincho ProN', "Yu Mincho", serif;
+    --font-jp: 'Yuji Mai', 'Hiragino Mincho ProN', "Yu Mincho", serif;
     --font-en: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
     --section-pad: 6rem 1.5rem;
   }
@@ -338,6 +338,10 @@
      ========================================================== */
   .section-character {
     background: var(--color-bg-deep);
+  }
+
+  .section-character .section-inner {
+    max-width: 58rem;
   }
 
   .character-grid {
