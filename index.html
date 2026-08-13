@@ -9,11 +9,11 @@
 
 <!-- ==========================================================
      Google Fonts
-     日本語：Zen Kaku Gothic New（細めで洗練されたゴシック） / 英語：Cormorant Garamond（セリフ体）
+     日本語：Yuji Syuku（楷書体に近い、細く静かな趣の書体） / 英語：Cormorant Garamond（セリフ体）
      ========================================================== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
 
 <style>
   /* ==========================================================
@@ -30,7 +30,7 @@
     --color-rust: #5a4632;        /* くすんだ茶 */
     --color-rust-dim: #3a2f22;    /* 暗いくすんだ茶 */
     --color-border: rgba(217, 218, 210, 0.16);
-    --font-jp: 'Zen Kaku Gothic New', 'Noto Sans JP', "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    --font-jp: 'Yuji Syuku', 'Hiragino Mincho ProN', "Yu Mincho", serif;
     --font-en: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
     --section-pad: 6rem 1.5rem;
   }
@@ -54,6 +54,11 @@
     letter-spacing: 0.05em;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+  }
+
+  html[data-lang="ja"] body {
+    font-weight: 400;
+    letter-spacing: 0.06em;
   }
 
   html[data-lang="en"] body {
@@ -233,44 +238,32 @@
 
   /* ==========================================================
      SECTION 0 : HERO
-     廃墟・霧のイメージをCSSのみで表現
+     背景：assets/top.jpg（廃墟の鳥居・霧の森）
      ========================================================== */
   .section-hero {
-    background:
-      radial-gradient(ellipse at 50% 15%, rgba(74,90,68,0.16) 0%, transparent 55%),
-      linear-gradient(to bottom, var(--color-bg-deep) 0%, var(--color-rust-dim) 55%, var(--color-bg-deep) 100%);
+    background-color: var(--color-bg-deep);
     overflow: hidden;
   }
 
-  /* 崩れた柱・廃墟のシルエット（CSSのみ） */
-  .hero-ruins {
+  .hero-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.55;
-    background-image:
-      repeating-linear-gradient(
-        90deg,
-        rgba(0,0,0,0.55) 0px,
-        rgba(0,0,0,0.55) 3px,
-        transparent 3px,
-        transparent 38px
-      ),
-      linear-gradient(
-        to top,
-        rgba(0,0,0,0.65) 0%,
-        rgba(0,0,0,0.65) 32%,
-        transparent 32%
-      );
-    background-size: 100% 100%, 76px 100%;
+    background-image: url('assets/top.jpg');
+    background-size: cover;
+    background-position: center 42%;
+    filter: saturate(0.5) brightness(0.6) contrast(1.05);
   }
 
-  .hero-ruins::before {
-    content: "";
+  .hero-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center 30%, transparent 25%, var(--color-bg-deep) 92%);
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(to bottom, rgba(11,12,8,0.55) 0%, rgba(11,12,8,0.2) 38%, rgba(11,12,8,0.8) 100%),
+      radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(11,12,8,0.5) 90%);
   }
 
   .hero-fog {
@@ -280,7 +273,7 @@
     bottom: 0;
     height: 46%;
     background: linear-gradient(to top, rgba(217,218,210,0.07), transparent);
-    z-index: 1;
+    z-index: 2;
     pointer-events: none;
     animation: fog-drift 70s ease-in-out infinite alternate;
   }
@@ -292,7 +285,7 @@
 
   .hero-copy {
     position: relative;
-    z-index: 2;
+    z-index: 3;
   }
 
   .hero-catch {
@@ -300,6 +293,10 @@
     font-weight: 300;
     line-height: 1.9;
     color: var(--color-mist);
+  }
+
+  html[data-lang="ja"] .hero-catch {
+    font-weight: 400;
   }
 
   html[data-lang="en"] .hero-catch {
@@ -521,7 +518,8 @@
        SECTION 0 : HERO
        ========================================================== -->
   <section id="hero" class="section-hero">
-    <div class="hero-ruins" aria-hidden="true"></div>
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-fog" aria-hidden="true"></div>
     <div class="section-inner hero-copy fade-in">
       <h1 class="hero-catch" data-jp="人間がいない世界。" data-en="A world without humans."></h1>
@@ -553,7 +551,7 @@
           <div class="character-avatar">
             <img class="character-image" src="assets/character01.png" alt="ノム">
           </div>
-          <p class="character-name">ノム</p>
+          <p class="character-name" data-jp="ノム" data-en="Nomu"></p>
           <p class="character-desc" data-jp="よく寝る。それだけでいい。" data-en="Sleeps a lot. That&#39;s enough."></p>
         </article>
 
@@ -561,7 +559,7 @@
           <div class="character-avatar">
             <img class="character-image" src="assets/character02.png" alt="モル">
           </div>
-          <p class="character-name">モル</p>
+          <p class="character-name" data-jp="モル" data-en="Moru"></p>
           <p class="character-desc" data-jp="臆病だけど、雨の日は外に出る。" data-en="Timid, but goes outside on rainy days."></p>
         </article>
 
@@ -569,7 +567,7 @@
           <div class="character-avatar">
             <img class="character-image" src="assets/character03.png" alt="ゾム">
           </div>
-          <p class="character-name">ゾム</p>
+          <p class="character-name" data-jp="ゾム" data-en="Zomu"></p>
           <p class="character-desc" data-jp="昔のことをよく覚えている。誰も聞かない。" data-en="Remembers the old days well. No one asks."></p>
         </article>
 
@@ -577,7 +575,7 @@
           <div class="character-avatar">
             <img class="character-image" src="assets/character04.png" alt="ミル">
           </div>
-          <p class="character-name">ミル</p>
+          <p class="character-name" data-jp="ミル" data-en="Miru"></p>
           <p class="character-desc" data-jp="池の底で何かを探している。まだ見つかっていない。" data-en="Searching for something at the bottom of the pond. Not found yet."></p>
         </article>
       </div>
